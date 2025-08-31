@@ -1,1 +1,1 @@
-# Automa-o-ponto
+# Automacao-ponto
