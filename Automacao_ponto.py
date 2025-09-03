@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+import time
 
 import smtplib
 from email.mime.text import MIMEText
@@ -47,10 +48,23 @@ try:
     email_field.send_keys(email)
     password_field.send_keys(password)
     login_button.click()
-    close_popup = wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[2]/div/div[2]/div/div[2]/div/div[1]/div/div/span')))
+
+    
+
+    pop_up_container = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "div.ant-modal-wrap"))
+    )
+    
+    # Executa o comando JavaScript para remover o elemento.
+    # 'arguments[0].remove()' é o comando para remover o elemento que foi passado.
+    driver.execute_script("arguments[0].remove()", pop_up_container)
+    #close_popup = wait.until(EC.element_to_be_clickable((By.XPATH,r'/html/body/div[2]/div/div[2]/div/div[2]/div/div[1]/div/div')))
+    #//span[contains(.,'FECHAR')]
+    #/html/body/div[2]/div/div[2]/div/div[2]/div/div[1]/div/div/span
+    #/html/body/div[2]/div/div[2]/div/div[2]/div/div[1]/div/div/span
     #/html/body/div[2]/div/div[2]/div/div[2]/div/div[1]/div/div/span
     #/html/body/div[2]/div/div[2]/div/div[2]/div/div[1]/div/div/span/span/svg
-    close_popup.click()
+    #close_popup.click()
 
     cpf_field = wait.until(EC.visibility_of_element_located((By.XPATH,'//*[@id="root"]/div[2]/div[2]/main/div/div/div/div/div/div[2]/div/div/div[1]/button')))
     cpf_field.click()
@@ -58,6 +72,13 @@ try:
     cpf_field_input.send_keys(cpf)
 
     #Falta apertar tecla enter ou clicar em bater
+ 
+   
+    confirmed_field= wait.until(EC.visibility_of_element_located((By.XPATH,'//*[@id="root"]/div[2]/div[2]/main/div/div/div/div/div/div[2]/div/div[1]/div[2]/button[2]/span')))
+    confirmed_field.click()
+
+    #/html/body/div[2]/div/div[2]/div/div[2]/div/div[1]/div/div/span/span/svg
+    #/html/body/div[2]/div/div[2]/div/div[2]/div/div[1]/div/div/span/span/svg/path[1]
     
 
 except :
